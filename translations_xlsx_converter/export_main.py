@@ -46,7 +46,7 @@ def _populate_translations_db_table(language_list):
 
     for key in language_nested_dict:
         translations = language_nested_dict[key]
-        TranslationsXlsxConverter.objects.update_or_create(
+        TranslationsXlsxConverter.objects.get_or_create(
             key=key,
             defaults={
                 "ru": translations.get("ru", ""),
