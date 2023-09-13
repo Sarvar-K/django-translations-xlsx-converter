@@ -1,0 +1,1 @@
+pip uninstall -y translations_xlsx_converter && python setup.py sdist && pip install dist/translations_xlsx_converter-*.tar.gz
