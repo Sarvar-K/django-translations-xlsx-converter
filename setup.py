@@ -4,7 +4,7 @@ from setuptools import find_packages
 
 setup(
     name='translations_xlsx_converter',
-    version='0.0.3',
+    version='0.0.4',
     packages=find_packages(),
     url='https://github.com/Sarvar-K/django-translations-xlsx-converter',
     author='Sarvar-K',

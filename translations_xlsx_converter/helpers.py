@@ -70,7 +70,7 @@ def get_dict_from_excel(excel_path, local_language_keys):
     ) for cell in rows_list[0][1:]]
 
     for row in rows_list[1:]:
-        translations = _construct_translations_dict_for_key(row, excel_languages_list)
+        translations = _construct_translations_dict_for_key(row, excel_languages_list, local_language_keys)
         res[row[0].value] = translations
 
     return res
