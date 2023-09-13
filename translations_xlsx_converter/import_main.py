@@ -25,7 +25,7 @@ def convert_xlsx_to_po():
         ) for path_obj in po_file_location_objects
     ]
 
-    dict_from_excel = helpers.get_dict_from_excel(f"{LOCALE_PATH}/{TRANSLATIONS_EXCEL_FILE_NAME}")
+    dict_from_excel = helpers.get_dict_from_excel(f"{LOCALE_PATH}/{TRANSLATIONS_EXCEL_FILE_NAME}", languages)
 
     for po_file_object in po_file_objects_list:
         source_pofile = po_file_object["file"]

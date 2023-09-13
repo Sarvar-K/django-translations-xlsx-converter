@@ -49,9 +49,16 @@ def _populate_translations_db_table(language_list):
         TranslationsXlsxConverter.objects.get_or_create(
             key=key,
             defaults={
-                "ru": translations.get("ru", ""),
-                "uz": translations.get("uz", ""),
-                "en": translations.get("en", ""),
+                "ru": translations.get(_get_local_language_key("ru", language_list), ""),
+                "uz": translations.get(_get_local_language_key("uz", language_list), ""),
+                "en": translations.get(_get_local_language_key("en", language_list), ""),
                 "origin_service": SERVICE_NAME_FOR_TRANSLATIONS_ORIGIN,
             }
         )
+
+
+def _get_local_language_key(language, language_list):
+    for language_key in language_list:
+        if language_key.startswith(language):
+            return language_key
+    return language

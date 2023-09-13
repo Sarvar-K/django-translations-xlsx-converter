@@ -58,28 +58,42 @@ def write_messages_to_excel(excel_path, languages, language_nested_messages_dict
     wb.save(excel_path)
 
 
-def get_dict_from_excel(excel_path, column=1):
+def get_dict_from_excel(excel_path, local_language_keys):
     res = {}
     wb = load_workbook(filename=excel_path)
     worksheet = wb.active
 
     rows_list = list(worksheet.iter_rows())
-    languages_list = [dict(column_index=cell.column - 1, name=cell.value) for cell in rows_list[0][1:]]
+    excel_languages_list = [dict(
+        column_index=cell.column - 1,
+        name=cell.value
+    ) for cell in rows_list[0][1:]]
 
     for row in rows_list[1:]:
-        translations = _construct_translations_dict_for_key(row, languages_list)
+        translations = _construct_translations_dict_for_key(row, excel_languages_list)
         res[row[0].value] = translations
 
     return res
 
 
-def _construct_translations_dict_for_key(row, languages_list):
+def _construct_translations_dict_for_key(row, excel_languages_list, local_language_keys):
     translations = {}
 
-    for language in languages_list:
+    for language in _map_excel_to_local_language(excel_languages_list, local_language_keys):
         translations[language["name"]] = row[language["column_index"]].value
 
     return translations
+
+
+def _map_excel_to_local_language(excel_languages_list, local_language_keys):
+    mapped_languages = []
+
+    for local_language_key in local_language_keys:
+        for obj in excel_languages_list:
+            if local_language_key.startswith(obj["name"]):
+                mapped_languages.append(dict(name=local_language_key, column_index=obj["column_index"]))
+
+    return mapped_languages
 
 
 def update_source(source_pofile, language, dict_data):
