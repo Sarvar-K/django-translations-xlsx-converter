@@ -76,7 +76,7 @@ _translations_xlsx_converter_ already exists, **simply --fake migration** with:
 python3 manage.py migrate translations_xlsx_converter --fake
 ```
 
-Exporting to Excel
+Exporting from Django to Excel
 ----------------
 **Run the following command to generate .xlsx file:**
 ```commandline
@@ -85,7 +85,7 @@ python3 manage.py translations_to_xlsx
 Excel file will be generated from the .po files from respective _locale_ subdirectories and placed in the _locale_
 directory.
 
-Exporting to database
+Exporting from Django to database
 ----------------
 Run migration if necessary and then **run the following command to populate database table:**
 ```commandline
@@ -104,4 +104,31 @@ Otherwise, this key will be skipped.
 
 Currently, only **en, ru and uz** languages are supported for exporting to database.
 
-Query
+Exporting from database to Excel
+-----------------
+Run the following SQL query in your database:
+```sql
+SELECT 
+	txc."key",
+	txc.ru,
+	txc.uz,
+	txc.en
+FROM translations_collector.translations_xlsx_converter AS txc
+ORDER BY id;
+```
+Export resulting dataset to Excel .xlsx file. Make sure to **only** include the rows of actual dataset in the export,
+e.g. skip the table information row with the (key, ru, uz, en) cells.
+
+Name the resulting .xlsx file in accordance with your TRANSLATIONS_EXCEL_FILE_NAME in _settings.py_ if it 
+is set. Otherwise, name your .xlsx file as _translations.xlsx_.
+
+Put your .xlsx file in your Django project's _locale_ directory.
+
+Import translations from Excel to Django
+----------
+Make sure your Excel .xlsx file is in the root of _locale_ directory and **run the following command:**
+```commandline
+python3 manage.py xlsx_to_translations
+```
+Translations of the Django .po files in the _locale_ directory will be updated in accordance with the
+provided Excel .xlsx file.
