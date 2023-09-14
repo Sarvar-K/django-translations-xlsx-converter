@@ -112,7 +112,8 @@ SELECT
 	txc."key",
 	txc.ru,
 	txc.uz,
-	txc.en
+	txc.en,
+	txc.origin_service
 FROM translations_collector.translations_xlsx_converter AS txc
 ORDER BY id;
 ```
