@@ -16,10 +16,10 @@ except AttributeError:
     TRANSLATIONS_EXCEL_FILE_NAME = "translations.xlsx"
 
 
-def convert_po_to_xlsx(use_db):
+def convert_po_to_xlsx(use_db, update):
     languages_list = helpers.get_languages(LOCALE_PATH)
     if use_db:
-        return _populate_translations_db_table(languages_list)
+        return _populate_translations_db_table(languages_list, update)
 
     language_nested_messages_dict = _get_language_nested_dict(languages_list)
     helpers.write_messages_to_excel(f"{LOCALE_PATH}/{TRANSLATIONS_EXCEL_FILE_NAME}", languages_list, language_nested_messages_dict)
@@ -41,12 +41,12 @@ def _get_language_nested_dict(languages_list):
     return language_nested_dict
 
 
-def _populate_translations_db_table(language_list):
+def _populate_translations_db_table(language_list, update):
     language_nested_dict = _get_language_nested_dict(language_list)
 
     for key in language_nested_dict:
         translations = language_nested_dict[key]
-        TranslationsXlsxConverter.objects.get_or_create(
+        kwargs = dict(
             key=key,
             defaults={
                 "ru": translations.get(_get_local_language_key("ru", language_list), ""),
@@ -55,6 +55,10 @@ def _populate_translations_db_table(language_list):
                 "origin_service": SERVICE_NAME_FOR_TRANSLATIONS_ORIGIN,
             }
         )
+        if update:
+            TranslationsXlsxConverter.objects.update_or_create(**kwargs)
+        else:
+            TranslationsXlsxConverter.objects.get_or_create(**kwargs)
 
 
 def _get_local_language_key(language, language_list):
