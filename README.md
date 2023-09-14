@@ -117,7 +117,7 @@ SELECT
 FROM translations_collector.translations_xlsx_converter AS txc
 ORDER BY id;
 ```
-Export resulting dataset to Excel .xlsx file. Make sure to **only** include the rows of actual dataset in the export,
+Export the resulting dataset to Excel .xlsx file. Make sure to **only** include the rows of actual dataset in the export,
 e.g. skip the table information row with the (key, ru, uz, en) cells.
 
 Name the resulting .xlsx file in accordance with your TRANSLATIONS_EXCEL_FILE_NAME in _settings.py_ if it 
