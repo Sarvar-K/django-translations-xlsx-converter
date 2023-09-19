@@ -19,7 +19,7 @@ git+https://github.com/Sarvar-K/django-translations-xlsx-converter
 
 Setup
 --------------
-Add 'services_communication' to your INSTALLED_APPS in settings.py.
+Add 'translations_xlsx_converter' to your INSTALLED_APPS in settings.py.
 ```python
 INSTALLED_APPS = [
     ...
