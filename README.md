@@ -13,7 +13,7 @@ Installation
 
 In _requirements.txt_ file
 ```txt
-git+https://github.com/ksinn/django-microservices-communication
+git+https://github.com/Sarvar-K/django-translations-xlsx-converter
 ```
 **Installation in Docker**: If installing via *pip install*, you will require *git* in image.
 
