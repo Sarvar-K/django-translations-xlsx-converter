@@ -101,4 +101,21 @@ def update_source(source_pofile, language, dict_data):
         if entry.msgid not in dict_data:
             continue
 
+        if not _is_valid_po_file_entry(entry, dict_data, language):
+            continue
+
         entry.msgstr = dict_data[entry.msgid].get(language) or ""
+
+
+def _is_valid_po_file_entry(entry, dict_data, language):
+    msgid = entry.msgid
+    msgstr = dict_data[entry.msgid].get(language) or msgid
+
+    # Check format arguments amount in translatable string
+    if msgid.count('{}') != msgstr.count('{}'):
+        print(f"Error for language '{language}' on line:\nmsgid: {msgid}\nmsgstr: {msgstr}")
+        print("Amount of format arguments in po file mismatch amount of format arguments in excel file entry")
+        print("------------------------")
+        return False
+
+    return True

@@ -1,3 +1,4 @@
+import polib
 from django.conf import settings
 from translations_xlsx_converter import helpers
 
