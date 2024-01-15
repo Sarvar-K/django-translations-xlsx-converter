@@ -104,7 +104,11 @@ def update_source(source_pofile, language, dict_data):
         if not _is_valid_po_file_entry(entry, dict_data, language):
             continue
 
-        entry.msgstr = dict_data[entry.msgid].get(language) or ""
+        updated_entry_msgstr = dict_data[entry.msgid].get(language) or ""
+        if entry.msgstr and not updated_entry_msgstr:
+            continue
+
+        entry.msgstr = updated_entry_msgstr
 
 
 def _is_valid_po_file_entry(entry, dict_data, language):
