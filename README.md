@@ -133,3 +133,11 @@ python3 manage.py xlsx_to_translations
 ```
 Translations of the Django .po files in the _locale_ directory will be updated in accordance with the
 provided Excel .xlsx file.
+
+You can also pass --xlsx_location="your_translations_location" file to specify path of the .xlsx file to import from 
+relative to your manage.py module. For example, if your file is located in the parent directory relative to your
+manage.py module, you can run the command as follows:
+```commandline
+python3 manage.py xlsx_to_translations --xlsx_location="../translations.xlsx"
+```
+**The --xlsx_location argument takes precedence above TRANSLATIONS_EXCEL_FILE_NAME setting.**
