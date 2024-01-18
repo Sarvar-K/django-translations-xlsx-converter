@@ -90,7 +90,14 @@ def _map_excel_to_local_language(excel_languages_list, local_language_keys):
 
     for local_language_key in local_language_keys:
         for obj in excel_languages_list:
-            if local_language_key.startswith(obj["name"]):
+            excel_language_code = obj["name"]
+
+            if not excel_language_code:
+                continue
+
+            #TODO consider the situation when there are multiple dialects (en_GB, en_US) and default (en) translation in excel file all at the same time in unknown order
+
+            if local_language_key.startswith(excel_language_code):
                 mapped_languages.append(dict(name=local_language_key, column_index=obj["column_index"]))
 
     return mapped_languages
